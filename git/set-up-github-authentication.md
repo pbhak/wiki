@@ -7,3 +7,6 @@ To enhance security, GitHub no longer allows simple authentication such as enter
 ## Setup
 
 1. Install GitHub Credential Manager (installation instructions [here](https://github.com/GitCredentialManager/git-credential-manager/blob/release/docs/install.md)).
+1. Run the installer.
+
+After this, whenever you try to push your changes, it will prompt you to log into GitHub through your browser.
