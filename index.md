@@ -1,6 +1,6 @@
 # Firebots Wiki
 
-## Welcome to the Firebots Wiki!
+## Welcome to the Firebots Wiki
 
 This is where we can document useful information and knowledge we gather throughout each season. The hope is that over the years, we will be able to put together a collection of helpful tips that both new and experienced members alike can draw from.
 
