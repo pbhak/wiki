@@ -10,7 +10,6 @@
     1. Keep the Saturation and Hue fairly large
 
 
-
 ## Values that previously worked
 
 ### Threshold Tab
@@ -29,3 +28,4 @@
 # AprilTag
 
 This is simple, on the dashboard, on the side panel, select AprilTag for type. Done.
+
