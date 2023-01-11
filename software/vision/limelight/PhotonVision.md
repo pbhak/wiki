@@ -1,4 +1,4 @@
-# How PhotonVison on Limelight
+# PhotonVision
 
 ## What is PhotonVision
 
@@ -10,7 +10,7 @@ The goal of PhotonVision is to get the limelight to sense the AprilTags. PhotonV
 
 [Download Steps](https://www.balena.io/etcher/)
 
-For the limelight, head on over to the [Photon Vision Gitub Page](https://github.com/photonvision/photonvision/releases). Get the latest release of Photon Vison. The name of the file you download should end with image_limelight.xy. 
+For the limelight, head on over to the [PhotonVision Gitub Page](https://github.com/photonvision/photonvision/releases). Get the latest release of PhotonVison. The name of the file you download should end with `image_limelight.xy`. 
 
 ### Flash PhotonVision to limelight
 

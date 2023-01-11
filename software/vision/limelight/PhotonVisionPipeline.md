@@ -2,12 +2,12 @@
 
 # Reflective Tape
 1. Go to: http://photonvision.local
-1. Go to the Input Tab
-    1. Change Red Balance and Blue Balance to the same values. The values should be around 20
-    1. Turn down Exposure as low as you can, making sure that the tape is still visible
-1. Head over to the Threshold Tab
+1. Go to the Input Tab.
+    1. Change Red Balance and Blue Balance to the same values. The values should be around 20.
+    1. Turn down Exposure as low as you can, making sure that the tape is still visible.
+1. Head over to the Threshold Tab.
     1. Change the HSV sliders to encompass the color of the tape that shows up on the Raw Image.
-    1. Keep the Saturation and Hue fairly large
+    1. Keep the Saturation and Hue fairly large.
 
 
 
