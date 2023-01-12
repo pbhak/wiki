@@ -6,3 +6,4 @@ These are our fake bios!
 * [Aryen](aryen.md)
 * [Shivani] (shivani.md)
 * [Yajwin] (yajwin.md)
+* [Krishna](krishna.md)
