@@ -1,4 +1,4 @@
-# Software This Season
+# Welcome to Software
 
 Welcome to our software development journey in preparation for this season's game. :)
 
