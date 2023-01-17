@@ -1,4 +1,4 @@
-# Wiki Basics: Cloning the Repository and Navigating the Local Copy
+# Wiki Basics
 
 ## Brief Walkthrough of Local Copy for Members
 
