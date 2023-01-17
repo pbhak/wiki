@@ -1,4 +1,4 @@
-# Charged Up: 2023 FRC Season
+# Charged Up: FRC Season
 
 This is the tracking and recording of all the work we are doing for this 2023 season. Click around to see the work the different subteams are doing.
 
