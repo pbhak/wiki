@@ -17,7 +17,7 @@
 * Hue: 75-112
 * Saturation: 79-255
 * Value: 32-255
-![Threhold Tab](/software/vision/limelight/PhotonVisionPipeline_images/threholdTab.png)
+![Threshold Tab](/software/vision/limelight/PhotonVisionPipeline_images/thresholdTab.png)
 ### Input Tab
 * Exposure: 0
 * Brightness: 50
