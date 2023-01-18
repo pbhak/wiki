@@ -23,7 +23,7 @@
 * Brightness: 50
 * Red Balance: 20
 * Blue Balance: 37
-* Resolution: 980 x 720 at 45 FPS, Picam res
+* Resolution: 960 x 720 at 45 FPS, Picam res
 ![Input Tab](/software/vision/limelight/PhotonVisionPipeline_images/inputTab.png)
 
 # AprilTag
