@@ -16,3 +16,8 @@ whenClickedB(runIntakeProcess(cone))
 whenClickedA(runIntakeProcess(cube))
 5. Open piston to width of cube and more.
 6. In 3 seconds (say) close piston around cube.
+
+Ideas we have:
+* Pre established angles measured using gyroscope -> like if you press a button, no matter where you are, if you want to go to 90 degrees you go to that position 
+* Arm can extend and retract 
+* Claw opens at the sameish width always for the cube (9 ½ inches ± ¼ in) -> because it has a curve, it needs to be at least 9 ½ inches minimum to have enough grip 
