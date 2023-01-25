@@ -22,8 +22,10 @@ Nothing other than the Swerve Subsystem should use the Swerve Module class itsel
 
 ### Swerve Joystick Command
 
-`SwerveJoystickCmd.java` does five things:
+`SwerveJoystickCmd.java` does seven things:
 1. recives joystick input
+1. normalizes input
+1. sets input to 0 if in deadband range
 1. smooths the input
 1. constructs ChassisSpeeds from the joystick input
 1. converts it into individual module states before 
