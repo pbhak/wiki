@@ -1,4 +1,4 @@
-# Wiki Basics
+# Wiki Local Copy Viewing
 
 ## Brief Walkthrough of Local Copy for Members
 
