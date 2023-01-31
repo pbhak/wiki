@@ -19,5 +19,7 @@ whenClickedA(runIntakeProcess(cube))
 
 Ideas we have:
 * Pre established angles measured using gyroscope -> like if you press a button, no matter where you are, if you want to go to 90 degrees you go to that position
+
 * Arm can extend and retract
+
 * Claw opens at the sameish width always for the cube (9 ½ inches ± ¼ in) -> because it has a curve, it needs to be at least 9 ½ inches minimum to have enough grip
