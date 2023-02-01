@@ -1,4 +1,4 @@
-# Swerve Drive 
+# Swerve Drive
 
 The swerve drive is a type of drive base that allows a robot to move in all directions by rotating the angle of each wheel independently.
 
@@ -23,7 +23,8 @@ Nothing other than the Swerve Subsystem should use the Swerve Module class itsel
 ### Swerve Joystick Command
 
 `SwerveJoystickCmd.java` does seven things:
-1. recives joystick input
+
+1. receives joystick input
 1. normalizes input
 1. sets input to 0 if in deadband range
 1. smooths the input
@@ -31,7 +32,7 @@ Nothing other than the Swerve Subsystem should use the Swerve Module class itsel
 1. converts it into individual module states before 
 1. sends the module states to the Swerve Subsystem
 
-> The Swerve Joystick Command takes a front-back function and a left-right function; front and left are positive speeds, while back and right are negative speeds; for most controllers, you need to do &#x2011;controller.getRawAxis(axis).
+> The Swerve Joystick Command takes a front-back function and a left-right function; front and left are positive speeds, while back and right are negative speeds; for most controllers, you need to do `-controller.getRawAxis(axis)`.
 
 It needs to be initialized in RobotContainer to be able to accept input. An example is provided below.
 
