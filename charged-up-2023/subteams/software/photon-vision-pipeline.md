@@ -17,14 +17,14 @@
 * Hue: 75-112
 * Saturation: 79-255
 * Value: 32-255
-![Threshold Tab](/software/vision/limelight/PhotonVisionPipeline_images/thresholdTab.png)
+![Threshold Tab](/software/vision/limelight/PhotonVisionPipeline_images/threshold-tab.png)
 ### Input Tab
 * Exposure: 0
 * Brightness: 50
 * Red Balance: 20
 * Blue Balance: 37
 * Resolution: 960 x 720 at 45 FPS, Picam res
-![Input Tab](/software/vision/limelight/PhotonVisionPipeline_images/inputTab.png)
+![Input Tab](/software/vision/limelight/PhotonVisionPipeline_images/input-tab.png)
 
 # AprilTag
 
