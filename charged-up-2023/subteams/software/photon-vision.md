@@ -1,6 +1,6 @@
 # PhotonVision
 
-## What is PhotonVision
+## What is PhotonVision?
 
 The goal of PhotonVision is to get the limelight to sense the AprilTags. PhotonVision is the only compatible software we found online that works with FRC. PhotonVision is essenstially OS that runs on the limelight. For more information visit their main website: [PhotonVision Main Site](https://docs.photonvision.org/en/latest/)
 
@@ -29,7 +29,7 @@ Linear equation for yaw: $y = m_2x+b_2$ (where x is yaw)
 * Aryav's constant: The $m_2$ value for the **yaw** linear function
 * Ritvik's constant: the $b_2$ value for the **yaw** linear function
 
-### `tuner.py`
+### Using `tuner.py`
 
 It is a python script that does some trig with the inputs. Using numpy it returns a linear equation that relates PhotonVision data to real values. To use, collect data on five differnt known distances away from AprilTag. Collect the following data for each distance:
 
@@ -39,10 +39,14 @@ It is a python script that does some trig with the inputs. Using numpy it return
 * Horizontal distance from robot to tag (manually measured)
 * Actual distance from tag (manually measured)
 
-//TODO: explain how to plug in values to `tuner.py`
+#### Inputing values
 
+There are two variables called `pitchData` and `yawData`. For `pitchData` you need to line up the robot exactly infront of the AprilTag. And then you need to measure the distance between the AprilTag and the robot as well as what the robot thinks the pitch is. Then you input that into pitch data, as a list of points, the points are `[distance, reportedPitch],[distance, reportedPitch],[distance, reportedPitch]` as many tumes as you have data points. Then repeat a similar process with `yawData`, except the points follow the pattern of `[[straightDistToAprilTag,horizontalDistToAprilTag],reportedYaw]`. Just run the python file to get the values.
 
 ## What is pitch?
 
+The pitch that photonVision returns is the difference in pitch between the triangle formed by center of sight of the camera to the wall and the pitch of triangle formed camera to AprilTag.
+Here is an example:
 
+![Pitch Example](photonVision_images/photonVisionPitchExample.png)
 
