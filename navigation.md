@@ -1,6 +1,7 @@
 # Firebots Wiki
 
-[gimmick:theme](cosmo)
+[gimmick:themechooser]()
+[gimmick:math]()
 
 [Git](git/git.md)
 [Wiki Set Up](wiki-set-up/wiki-set-up.md)

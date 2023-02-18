@@ -1,7 +1,7 @@
 # Photon Vision Pipeline Process
 
 # Reflective Tape
-1. Go to: http://photonvision.local
+1. Go to: http://photonvision.local:5800
 1. Go to the Input Tab.
     1. Change Red Balance and Blue Balance to the same values. The values should be around 20.
     1. Turn down Exposure as low as you can, making sure that the tape is still visible.
