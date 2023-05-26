@@ -1,5 +1,6 @@
 # Welcome to Mechanical!
 
-Information is here
+This is where you will find information/solutions to your manufacturing related issues.
 
-* [Mechanical Page](mechanical/mechanical-page.md)
+* [CNC + Fusion 360 information](CNC.md)
+* [Mill Setup](Mill.md)

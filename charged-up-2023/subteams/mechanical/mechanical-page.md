@@ -1,3 +1,0 @@
-# Mechanical Page
-
-Insert information
