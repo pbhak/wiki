@@ -9,3 +9,4 @@ These are our fake bios!
 * [Shivani] (shivani.md)
 * [Yajwin] (yajwin.md)
 * [Krishna](krishna.md)
+* [Mahika] (mahika.md) 
