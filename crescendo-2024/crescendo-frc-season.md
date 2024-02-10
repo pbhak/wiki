@@ -6,4 +6,4 @@ This is the tracking and recording of all the work we are doing for this 2024 se
 * [Mechanical](subteams/mechanical/welcome-to-mechanical.md)
 * [Design](subteams/design/welcome-to-design.md)
 * [Business and Marketing](subteams/bam/welcome-to-bam.md)
-* [Community Impact]
+* [Community Impact](subteams/community-impact.md)
