@@ -23,4 +23,52 @@ The Arm refers to the mechanism on the robot that holds [Peter](peter.md) (the s
 ![The different parts of the Arm mechanism that are responsible for moving the arm to different angles](arm-images/FRCArmMechanisms.png)
 
 - The arm is driven by 4 motors, 2 for each side of the arm.
-- The 2 motors on each side are meshed to a gearbox, which
+- The 2 motors on each side are meshed to a gearbox, which exchanges speed for torque, allowing the motors to lift the heavy arm.
+- The gearboxes are connected to the actual arm using two chains, whose gear ratio also exchanges speed for torque.
+- On the last gear of one of the gearboxes, there is an absolute encoder. It is used to detect what angle the arm is at when the robot is enabled, but after enabling it is no longer used throughout the match.
+
+## Programming
+
+The Arm is moved and controlled by turning the four arm motors. Only one motor (the Top Left motor) is controlled, and the other three motors follow this motor.
+
+The main interface for controlling the Arm is the **ArmSubsystem**, and there is a set of commands that set the Arm's angle to specific values.
+
+### ArmSubsystem.java
+
+The Arm is controlled mainly from `ArmSubsystem.java`. This subsystem has a variable called `targetDegrees`, and on its own, the subsystem constantly moves the motors so that the Arm's angle is at `targetDegrees`. Most methods in this subsystem simply set the value of `targetDegrees` to some constant angle, a given angle, or a calculated angle.
+
+#### Methods
+
+The main methods of this subsystem are:
+
+- `public void setTargetDegrees(double angleDegrees) {...}` - This sets the ArmSubsystem's `targetDegrees` variable to `angleDegrees`, clamped between 4 and 90 degrees.
+- `public void rotateArmToSpeakerPosition(Translation2d robotPosition) {...}` - This uses `robotPosition` to find the robot's distance from the target Speaker on the field, and uses that to calculate the angle the arm needs to be at to score into the Speaker. The `targetDegrees` variable is then updated to this angle.
+- `public void rotateToAmpPosition() {...}` - This sets the `targetDegrees` variable to a constant, so that the arm is at the right angle to score into the Amp on the field.
+- `public void rotateToRestPosition() {...}` - This sets the `targetDegrees` variable to a constant, so that the arm is slightly above horizontal, and is at the right angle to outtake the note in Peter.
+- `public double getCorrectedDegrees() {...}` - This calculates and returns the current angle the arm is at, in degrees. Since the motor encoders read an angle of slightly above 0 when the arm is horizontal, this function corrects the reading so that it returns 0 degrees when the arm is horizontal.
+- `public boolean atTarget(double tolerance) {...}` - This returns `true` if the Arm's current angle is at `targetDegrees` (plus or minus `tolerance`), and returns `false` otherwise.
+
+So, `ArmSubsystem.java` is the main interface for controlling the Arm. It allows for the Arm's angle to be set to a preset angle, to a calculated Speaker angle, or to any arbitrary angle (4 to 90 degrees). It also allows to check what angle the Arm is at, and whether or not the Arm has reached its `targetDegrees` angle.
+
+#### Initialization
+
+On initialization, the ArmSubsystem performs a number of steps before it can be used. These steps are:
+
+- Create a new `CurrentLimitsConfigs` object, with a constant Current Limit, to be applied to the four motors.
+- Create a new `MotorOutputConfigs` object, with Neutral Mode set to Brake, to be applied to the four motors.
+- Create a new `Slot0Configs` object, with a constant **P** value for PID, to be applied to the four motors.
+- Create a new `ArmFeedforward` object, with constant **S**, **G**, and **V** values, to be applied to the four motors.
+- Initialize the four `TalonFX` motor objects, using constants for the device IDs and the CANBus name.
+- Create two `Follower` objects that follow the Top Left motor, with one of the Followers set to opposite direction.
+- Apply the correct Follower objects to the remaining three motors.
+- Apply the MotorOutputConfigs and the CurrentLimits to the four motors.
+- Create a `TalonFX` variable called **master**, and assign it to the Top Left motor.
+- Apply the Slot0Configs to the master motor.
+- Create a new `MotionMagicConfigs` object with constant Cruise Velocity and Acceleration values, and apply it to the master motor.
+- Initialize a new `DutyCycleEncoder` object called **revEncoder**, with a constant Encoder Port, representing the Arm's **Absolute Encoder**.
+- In a new Thread: Wait until revEncoder is connected. Once it is, set the master motor's Encoder reading to revEncoder's position, converted to motor rotations using a constant conversion factor. Then, set the **initialized** variable to true, and initialize the **armHorizontalOffset** variable to the Absolute Horizontal Offset constant, converted to arm rotations using a constant conversion factor.
+- Finally, set the `targetDegrees` variable to the constant Default Arm Angle, which is **20 degrees**.
+
+### Arm Commands
+
+There are four commands that control the Arm, and they all utilize the ArmSubsystem.
