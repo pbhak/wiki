@@ -4,7 +4,7 @@
 
 ## Overview
 
-The Arm refers to the mechanism on the robot that holds [Peter](peter.md) (the shooter) and changes its angle. It includes four motors, two gearboxes, two chain reductions[^1], an absolute encoder, and the two metal arms (to which Peter is attached).
+The Arm refers to the mechanism on the robot that holds [Peter](peter.md) (the shooter) and changes its angle. It includes four motors, two gearboxes, two chain reductions [^1], an absolute encoder, and the two metal arms (to which Peter is attached).
 
 [^1]: A chain reduction refers to two gears, with different sizes, connected by a chain. In the Arm, the final gear of each gearbox is connected to an 18-tooth gear, which is connected to a 42-tooth gear on the main pivot of the arm by a chain.
 
