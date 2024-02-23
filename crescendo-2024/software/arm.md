@@ -52,20 +52,20 @@ So, `ArmSubsystem.java` is the main interface for controlling the Arm. It allows
 
 On initialization, the ArmSubsystem performs a number of steps before it can be used. These steps are:
 
-- Create a new `CurrentLimitsConfigs` object, with a constant Current Limit, to be applied to the four motors.
-- Create a new `MotorOutputConfigs` object, with Neutral Mode set to Brake, to be applied to the four motors.
-- Create a new `Slot0Configs` object, with a constant **P** value for PID, to be applied to the four motors.
-- Create a new `ArmFeedforward` object, with constant **S**, **G**, and **V** values, to be applied to the four motors.
-- Initialize the four `TalonFX` motor objects, using constants for the device IDs and the CANBus name.
-- Create two `Follower` objects that follow the Top Left motor, with one of the Followers set to opposite direction.
-- Apply the correct Follower objects to the remaining three motors.
-- Apply the MotorOutputConfigs and the CurrentLimits to the four motors.
-- Create a `TalonFX` variable called **master**, and assign it to the Top Left motor.
-- Apply the Slot0Configs to the master motor.
-- Create a new `MotionMagicConfigs` object with constant Cruise Velocity and Acceleration values, and apply it to the master motor.
-- Initialize a new `DutyCycleEncoder` object called **revEncoder**, with a constant Encoder Port, representing the Arm's **Absolute Encoder**.
-- In a new Thread: Wait until revEncoder is connected. Once it is, set the master motor's Encoder reading to revEncoder's position, converted to motor rotations using a constant conversion factor. Then, set the **initialized** variable to true, and initialize the **armHorizontalOffset** variable to the Absolute Horizontal Offset constant, converted to arm rotations using a constant conversion factor.
-- Finally, set the `targetDegrees` variable to the constant Default Arm Angle, which is **20 degrees**.
+1. Create a new `CurrentLimitsConfigs` object, with a constant Current Limit, to be applied to the four motors.
+2. Create a new `MotorOutputConfigs` object, with Neutral Mode set to Brake, to be applied to the four motors.
+3. Create a new `Slot0Configs` object, with a constant **P** value for PID, to be applied to the four motors.
+4. Create a new `ArmFeedforward` object, with constant **S**, **G**, and **V** values, to be applied to the four motors.
+5. Initialize the four `TalonFX` motor objects, using constants for the device IDs and the CANBus name.
+6. Create two `Follower` objects that follow the Top Left motor, with one of the Followers set to opposite direction.
+7. Apply the correct Follower objects to the remaining three motors.
+8. Apply the MotorOutputConfigs and the CurrentLimits to the four motors.
+9. Create a `TalonFX` variable called **master**, and assign it to the Top Left motor.
+10. Apply the Slot0Configs to the master motor.
+11. Create a new `MotionMagicConfigs` object with constant Cruise Velocity and Acceleration values, and apply it to the master motor.
+12. Initialize a new `DutyCycleEncoder` object called **revEncoder**, with a constant Encoder Port, representing the Arm's **Absolute Encoder**.
+13. In a new Thread: Wait until revEncoder is connected. Once it is, set the master motor's Encoder reading to revEncoder's position, converted to motor rotations using a constant conversion factor. Then, set the **initialized** variable to true, and initialize the **armHorizontalOffset** variable to the Absolute Horizontal Offset constant, converted to arm rotations using a constant conversion factor.
+14. Finally, set the `targetDegrees` variable to the constant Default Arm Angle, which is **20 degrees**.
 
 ### Arm Commands
 
