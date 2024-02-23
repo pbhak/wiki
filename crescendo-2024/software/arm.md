@@ -2,7 +2,7 @@
 
 ![The entire Arm and Peter mechanism on the robot](arm-images/FRCPeterArm.png)
 
-## Overview
+## **Overview**
 
 The Arm refers to the mechanism on the robot that holds [Peter](peter.md) (the shooter) and changes its angle. It includes four motors, two gearboxes, two chain reductions, an absolute encoder, and the two metal arms (to which Peter is attached).
 
@@ -25,7 +25,7 @@ The Arm refers to the mechanism on the robot that holds [Peter](peter.md) (the s
 - The gearboxes are connected to the actual arm using two chains, whose gear ratio also exchanges speed for torque.
 - On the last gear of one of the gearboxes, there is an absolute encoder. It is used to detect what angle the arm is at when the robot is enabled, but after enabling it is no longer used throughout the match.
 
-## Programming
+## **Programming**
 
 The Arm is moved and controlled by turning the four arm motors. Only one motor (the Top Left motor) is controlled, and the other three motors follow this motor.
 
@@ -35,7 +35,7 @@ The main interface for controlling the Arm is the **ArmSubsystem**, and there is
 
 The Arm is controlled mainly from `ArmSubsystem.java`. This subsystem has a variable called `targetDegrees`, and on its own, the subsystem constantly moves the motors so that the Arm's angle is at `targetDegrees`. Most methods in this subsystem simply set the value of `targetDegrees` to some constant angle, a given angle, or a calculated angle.
 
-#### Methods
+#### *Methods*
 
 The main methods of this subsystem are:
 
@@ -48,7 +48,7 @@ The main methods of this subsystem are:
 
 So, `ArmSubsystem.java` is the main interface for controlling the Arm. It allows for the Arm's angle to be set to a preset angle, to a calculated Speaker angle, or to any arbitrary angle (4 to 90 degrees). It also allows to check what angle the Arm is at, and whether or not the Arm has reached its `targetDegrees` angle.
 
-#### Initialization
+#### *Initialization*
 
 On initialization, the ArmSubsystem performs a number of steps before it can be used. These steps are:
 
