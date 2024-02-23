@@ -71,4 +71,13 @@ On initialization, the ArmSubsystem performs a number of steps before it can be 
 
 ### Arm Commands
 
-There are four commands that control the Arm, and they all utilize the ArmSubsystem.
+There are five or six commands that control the Arm, and most of them utilize the ArmSubsystem. Each command uses the methods inside ArmSubsystem to set the angle of the arm.
+
+Here are the commands that control the arm:
+
+- **AimArmAtAmpCmd** - Sets the angle of the arm to a constant, so that the robot can score a note into the Amp. In execute(), it runs `armSubsystem.rotateToAmpPosition()`, and it finishes when `armSubsystem.atTarget(1)` returns true in isFinished().
+- **AimArmCmd** - Aims the arm at the Speaker, so that when a note is shot, it will make it into the Speaker. In execute(), it runs `armSubsystem.rotateToSpeaker(swerveSubsystem.getState().Pose.getTranslation())`, which calculates the correct arm angle inside ArmSubsystem using the given robot Translation2d. It finishes when the arm is at the calculated target angle by running `armSubsystem.atTarget(1)` in isFinished().
+- **ArmToAngleCmd** - Sets the angle of the arm to a given angle, using a Supplier. It runs `arm.setTargetDegrees(angle.get())` in execute(), with `angle` being the angle Supplier, and doesn't stop on its own. When the command finishes, it returns the arm to the rest position by running `arm.rotateToRestPosition()` in end().
+- **ArmToNeutralCmd** - Sets the angle of the arm to the Neutral position by running `armSubsystem.rotateToRestPosition()` in execute(), and it finishes when the arm is at the target angle by running `armSubsystem.atTarget(1)` in isFinished().
+- **ArmToPickupCmd** - Sets the angle of the arm to the Intake position by running `armSubsystem.setTargetDegrees(Constants.Arm.INTAKE_ANGLE)` in execute(), and it finishes when the arm is at the target angle by running `armSubsystem.atTarget(2)` in isFinished().
+- **AimAtSpeaker** - This is a Parallel Command Group. At the same time, it spins up the shooter flywheels, 
