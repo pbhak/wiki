@@ -32,7 +32,22 @@ network:
                 - 10.35.1.4/32
             routes:
                 - to: default
-                via: 10.35.1.1
+                via: 10.35.1.1           
 ```
+<p style="font-size:5px;">Bob was here</p>
 3. Run ```sudo netplan apply```
 4. Restart the pi
+
+## Calibration muy importante 
+calibration is very important and you do two ways:
+* through photon vision's UI [photonvision's UI](#photonvisions-ui)
+* Calibdb (recommended)
+
+## Calibrating on Photonvision's UI
+it requires for you to print out the checkerboard given in the UI and then take hundreds of pictures in oblique angles, far and close until you fill up a lot of the screen in the dots ~500 photos
+
+* if you take too many photos, it doesn't load upper limit of photos is around 700
+* Make sure you dont move the board too fast otherwise the calibration will fail
+
+## Calibrating on Cadlibdb
+You need to print out their pattern. Plug in the camera to your computer and go to [put link for Calibdb here](). Match up your print out to the outline they display on the screen. Hold still while you image lines up with the image on the screen. It will automatically take the photo. Keep taking the photos and it will stop automatically. Then export the json, and in the photonvision Cameras tab, you can import the file. There will be a button.
