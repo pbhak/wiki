@@ -1,6 +1,8 @@
 # Wiki: Local Copy Viewing
 
-## Do you want to see the progress you've made, but aren't ready to officially publish your changes? It's HIGHLY recommended you access your LOCAL COPY before publishing!
+### It's required you view your local copy before publishing!
+
+This helps you catch any errors!
 
 1. Go to the team GitHub page and click on "wiki".
 2. Download and open files onto VS Code, AKA clone the repository.

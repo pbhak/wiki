@@ -1,4 +1,4 @@
-# Firebots Wiki
+# Firebots Wiki 
 
 [gimmick:theme](cosmo)
 [gimmick:math]()
