@@ -1,20 +1,22 @@
 # Arm
 
-![The entire Arm and Peter mechanism on the robot](arm-images/FRCPeterArm.png)
+![The Piper mechanism on the robot](arm-images/FRCPiper.png)
 
 ## **Overview**
 
-The Arm refers to the mechanism on the robot that holds [Peter](peter.md) (the shooter) and changes its angle. It includes four motors, two gearboxes, two chain reductions, an absolute encoder, and the two metal arms (to which Peter is attached).
+The Arm refers to the mechanism on the robot that holds [Piper](peter.md) (the shooter) and changes its angle. It includes four motors, two gearboxes, two chain reductions, an absolute encoder, and the two metal arms (to which Piper is attached).
 
 ### Range of Motion
 
 - The arm moves in a range from horizontal (0 degrees) to vertical (around 90 degrees).
 - There are different preset angles for the arm to go to, depending on the task.
-  - The rest position (default position) is 20 degrees.
+  - The rest/default/neutral position is 56.12 degrees.
   - The intake position is 4 degrees.
-  - The amp position (angle for scoring into the Amp) is 78 degrees.
+  - The amp position (angle for scoring into the Amp) is 90 degrees.
   - The speaker position (angle for scoring into the Speaker) is calculated automatically, and ranges from around 0 to 55 degrees.
-- At the start of each round, the arm has to start at a certain angle (around 50 degrees) in order to keep Peter inside the robot starting boundary. The arm is lifted to this position by people before the robot is enabled.
+  - The "Bundt" position is 8.5 degrees.
+  - The "Duck" position is 12 degrees.
+- At the start of each round, the arm has to start at a certain angle (around 50 degrees) in order to keep Piper inside the robot starting boundary. The arm is lifted to this position by people before the robot is enabled.
 
 ### Design
 
@@ -23,7 +25,7 @@ The Arm refers to the mechanism on the robot that holds [Peter](peter.md) (the s
 - The arm is driven by 4 motors, 2 for each side of the arm.
 - The 2 motors on each side are meshed to a gearbox, which exchanges speed for torque, allowing the motors to lift the heavy arm.
 - The gearboxes are connected to the actual arm using two chains, whose gear ratio also exchanges speed for torque.
-- On the last gear of one of the gearboxes, there is an absolute encoder. It is used to detect what angle the arm is at when the robot is enabled, but after enabling it is no longer used throughout the match.
+- On the last gear of one of the gearboxes, there is an absolute encoder. It is used to detect what angle the arm is at when the robot is enabled, and after enabling it is used throughout the match to "reset" the arm motor position, in order to recalibrate the angle and make aiming at the Speaker more accurate and consistent.
 
 ## **Programming**
 
@@ -39,14 +41,15 @@ The Arm is controlled mainly from `ArmSubsystem.java`. This subsystem has a vari
 
 The main methods of this subsystem are:
 
-- `public void setTargetDegrees(double angleDegrees) {...}` - This sets the ArmSubsystem's `targetDegrees` variable to `angleDegrees`, clamped between 4 and 90 degrees.
-- `public void rotateArmToSpeakerPosition(Translation2d robotPosition) {...}` - This uses `robotPosition` to find the robot's distance from the target Speaker on the field, and uses that to calculate the angle the arm needs to be at to score into the Speaker. The `targetDegrees` variable is then updated to this angle.
-- `public void rotateToAmpPosition() {...}` - This sets the `targetDegrees` variable to a constant, so that the arm is at the right angle to score into the Amp on the field.
-- `public void rotateToRestPosition() {...}` - This sets the `targetDegrees` variable to a constant, so that the arm is slightly above horizontal, and is at the right angle to outtake the note in Peter.
+- `public void resetPosition() {...}` - This recalibrates the arm motor encoder's Position by recalculating what it's supposed to be using the data from the Absolute Encoder.
+- `public void setTargetDegrees(double angleDegrees) {...}` - This sets the ArmSubsystem's `targetDegrees` variable to `angleDegrees`, clamped between 1 and 90 degrees.
+- `public static double calculateAngleToSpeaker(Translation2d robotPosition, boolean redside) {...}` - This uses `robotPosition` to find the robot's distance from the target Speaker on the field, and uses that to calculate the angle the arm needs to be at to score into the Speaker. This angle is then returned to be used in other Commands.
+- `public void rotateToRestPosition() {...}` - This sets the `targetDegrees` variable to a constant, so that the arm at around 56 degrees, and is at the right angle to outtake the note in Piper.
 - `public double getCorrectedDegrees() {...}` - This calculates and returns the current angle the arm is at, in degrees. Since the motor encoders read an angle of slightly above 0 when the arm is horizontal, this function corrects the reading so that it returns 0 degrees when the arm is horizontal.
 - `public boolean atTarget(double tolerance) {...}` - This returns `true` if the Arm's current angle is at `targetDegrees` (plus or minus `tolerance`), and returns `false` otherwise.
+- `public void setEnable(boolean toset) {...}` - This sets the `enableArm` variable. When this variable is true, the Arm moves to `targetDegrees` like normal, but when `enableArm` is false, the Arm will not move.
 
-So, `ArmSubsystem.java` is the main interface for controlling the Arm. It allows for the Arm's angle to be set to a preset angle, to a calculated Speaker angle, or to any arbitrary angle (4 to 90 degrees). It also allows to check what angle the Arm is at, and whether or not the Arm has reached its `targetDegrees` angle.
+So, `ArmSubsystem.java` is the main interface for controlling the Arm. It allows for the Arm's angle to be set to any arbitrary angle (1 to 90 degrees), and to calculate the Speaker angle. It also allows to check what angle the Arm is at, and whether or not the Arm has reached its `targetDegrees` angle. Finally, it gives the control of either enabling or disabling the Arm.
 
 #### *Initialization*
 
@@ -65,18 +68,13 @@ On initialization, the ArmSubsystem performs a number of steps before it can be 
 11. Create a new `MotionMagicConfigs` object with constant Cruise Velocity and Acceleration values, and apply it to the master motor.
 12. Initialize a new `DutyCycleEncoder` object called **revEncoder**, with a constant Encoder Port, representing the Arm's **Absolute Encoder**.
 13. In a new Thread: Wait until revEncoder is connected. Once it is, set the master motor's Encoder reading to revEncoder's position, converted to motor rotations using a constant conversion factor. Then, set the **initialized** variable to true, and initialize the **armHorizontalOffset** variable to the Absolute Horizontal Offset constant, converted to arm rotations using a constant conversion factor.
-14. Finally, set the `targetDegrees` variable to the constant Default Arm Angle, which is **20 degrees**.
+14. Set the `targetDegrees` variable to the current arm angle, plus 10 degrees. This ensures that once the robot starts, it will lift the arm 10 degrees above the locked ratchet position so that the ratchet disengages.
+15. Finally, set the `enableArm` variable to false.
 
 ### Arm Commands
 
-There are five or six commands that control the Arm, and most of them utilize the ArmSubsystem. Each command uses the methods inside ArmSubsystem to set the angle of the arm.
+There are three commands that control the Arm, and most of them utilize the ArmSubsystem.
 
 Here are the commands that control the arm:
 
-- **AimArmAtAmpCmd** - Sets the angle of the arm to a constant, so that the robot can score a note into the Amp. In execute(), it runs `armSubsystem.rotateToAmpPosition()`, and it finishes when `armSubsystem.atTarget(1)` returns true in isFinished().
-- **AimArmCmd** - Aims the arm at the Speaker, so that when a note is shot, it will make it into the Speaker. In execute(), it runs `armSubsystem.rotateToSpeaker(swerveSubsystem.getState().Pose.getTranslation())`, which calculates the correct arm angle inside ArmSubsystem using the given robot Translation2d. It finishes when the arm is at the calculated target angle by running `armSubsystem.atTarget(1)` in isFinished().
-- **ArmToAngleCmd** - Sets the angle of the arm to a given angle, using a Supplier. It runs `arm.setTargetDegrees(angle.get())` in execute(), with `angle` being the angle Supplier, and doesn't stop on its own. When the command finishes, it returns the arm to the rest position by running `arm.rotateToRestPosition()` in end().
-- **ArmToNeutralCmd** - Sets the angle of the arm to the Neutral position by running `armSubsystem.rotateToRestPosition()` in execute(), and it finishes when the arm is at the target angle by running `armSubsystem.atTarget(1)` in isFinished().
-- **ArmToPickupCmd** - Sets the angle of the arm to the Intake position by running `armSubsystem.setTargetDegrees(Constants.Arm.INTAKE_ANGLE)` in execute(), and it finishes when the arm is at the target angle by running `armSubsystem.atTarget(2)` in isFinished().
-- **AimAtSpeaker** - This is a *Parallel Command Group*. At the same time, it spins up the shooter flywheels, aims the arm at the Speaker, and locks the robot's movement to always face the Speaker. It does this by adding three commands in Parallel: **SpinUpShooter()**, **AimArmCmd()**, and **SwerveLockedAngleCmd.fromPose()**.
-- **Intake** - This is a *Sequential Command Group*. First, it sets the arm's angle to the Intake position while running the intake motors until it detects a note. Next, it set's the arm's angle to the Neutral position while running the preshooter motors one rotation in reverse, to stage the note into the shooter. This is done by placing two Parallel Command Groups in sequence. The first Parallel Command Group has two commands: **ArmToPickupCmd()** and **RunIntakeUntilDetection()**. The second Parallel Command Group also has two commands: **ArmToNeutralCmd()** and **BackupPeter()**.
+- **ArmToAngleCmd** - This is the main command that provides detailed control of the Arm. The command is given an `angle` Supplier, whose value is used by the command to pass into ArmSubsystem.setTargetDegrees. The command also has many methods that return new ArmToAngleCmd objects with specific angle Suppliers. This is how the command goes about rotating the arm to constant angles, like Amp and Neutral, and also how it uses ArmSubsystem.calculateAngleToSpeaker to rotate the arm to the Speaker position. Finally, the command handles "return states", which is whether the arm should return to rest after it finished moving to the target angle.
