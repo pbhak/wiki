@@ -1,4 +1,4 @@
-# Vision
+# Vision: "Literally Cooking"
 
 ## Goals for vision this year
 
