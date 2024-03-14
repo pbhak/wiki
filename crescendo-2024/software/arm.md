@@ -1,4 +1,4 @@
-# Arm
+# Arm: Adventures in Angles
 
 ![The Piper mechanism on the robot](arm-images/FRCPiper.png)
 

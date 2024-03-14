@@ -1,6 +1,6 @@
-# Peter
+# Piper & Peter: The Dynamic Duo
 
-## Wait, what IS Peter, exactly?
+## Wait, what ARE Piper and Peter, exactly?
 
 * Peter is the name for our intake-shooter mechanism.
 * We have set the intake motors to run at 0.5 speed until our infrared sensor detects a note within 2 feet of it. Once this condition is true, the intake motors run at 0 speed and the preshooter motor runs for as many rotations as needed to move the note 3 more inches before stopping. Once driver input is given, the shooter motors run at a slower speed for a few seconds to warm them up before going to full speed. At the same time, the preshooter motor begins to run again to shoot the note.
