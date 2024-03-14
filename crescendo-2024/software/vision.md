@@ -12,6 +12,10 @@ Since we used an Orange Pi this year in contrast to Limelight 2, the hardware se
 In contrast to last years Limelight 2, we chose the Orange Pi as our coprocessor of choice. Here is a general guide for the orange pi with photonvision: [Orange Pi Docs](https://docs.google.com/document/d/1DAPOnU2NfOp91UnMQnkhyiUAanlCDJ6zl_YsCkCMZdA/edit) Keep in mind, the docs are just notes that someone made while they were trying out the Orange Pi and all the info there should be taken with a grain of salt. We bought two Orange Pi 5's. On a microSD card, we flashed the image for the pi, which can be found here. [Latest Releases](https://github.com/PhotonVision/photonvision/releases). Make sure to download the img that is meant for the Orange Pi 5, not the 5 Plus. We used Balena Etcher to flash the image on the card. Put the SD card into the Pi. 
 >**Please use caution to not pop out the sd card or unplug the Pi while the Pi is on. If you do manage to screw up and do this please refer to: [What to do if I popped out the SD card](#what-to-do-if-i-popped-out-the-sd-card)**
 >
+
+>**The orange pi is highly susceptible to overheating so please try add fans, heatsyncs and please don't add more than 2 cameras per orangepi**
+>
+
 After the pi boots up, the login is "pi" and the password is "raspberry". Next [Set up the static ID](#setting-up-static-ip-on-orangepi)
 
 You can access the photon vision dashboard through your ip + port number. ```10.35.1.1:5800```
@@ -104,3 +108,38 @@ public Optional<EstimatedRobotPose> getMultiTagPose3d(Pose2d previousRobotPose) 
     return photonPoseEstimator.update();
   }
 ```
+
+## Kalman filter
+Kalman filter combines with odomotery with pose of the robot and you can supply matrices (specifies the degree trust in the vision) to get a better picture of where the robot is relative to the field. 
+In Robot.java:
+
+In field:
+```java
+private static Matrix<N3, N1> visionMatrix = new Matrix<N3, N1>(Nat.N3(), Nat.N1());
+```
+In robot init:
+```java
+visionMatrix.set(0, 0, 0);
+    visionMatrix.set(1, 0, 0.2d);
+    visionMatrix.set(2, 0, Double.MAX_VALUE);
+```
+In periodic:
+
+```java
+m_robotContainer.doTelemetry();
+    Optional<EstimatedRobotPose> frontRobotPose =
+        frontVision.getMultiTagPose3d(driveTrain.getState().Pose);
+    if (frontRobotPose.isPresent()) {
+      driveTrain.addVisionMeasurement(
+          frontRobotPose.get().estimatedPose.toPose2d(), Timer.getFPGATimestamp(), visionMatrix);
+    }
+    Optional<EstimatedRobotPose> sideRobotPose =
+        sideVision.getMultiTagPose3d(driveTrain.getState().Pose);
+    if (sideRobotPose.isPresent()) {
+      driveTrain.addVisionMeasurement(
+          sideRobotPose.get().estimatedPose.toPose2d(), Timer.getFPGATimestamp(), visionMatrix);
+    }
+```
+
+## Camera Mount
+It is **IMPERATIVE** that you look at camera position when designing the robot, so talk to design and work with them to figure where the camera would be most useful where it can see what it needs to see most, if not all the time. This also gives you the time to have the potential to add multiple cameras.
