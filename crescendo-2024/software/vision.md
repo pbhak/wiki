@@ -63,3 +63,44 @@ You need to print out their pattern. Plug in the camera to your computer and go 
 
 ## Setup Web UI of PhotonVision
 Change the resolution of the camera to the resolution of the calibration. Also click auto exposure to be be on. Dont forget to upload calibration. In processing mode, click 3d. Then go to the AprilTag tab, change the tag family to the family used in your years game. Head over to Output and click 'Do Single-Target Estimation' and make sure 'always do single-target estimation is off'
+
+
+## Straight line distance code
+```java
+public Transform3d getTransformToTarget() {
+    if (!pipeline.hasTargets()) {
+      return new Transform3d(0.0, 0.0, 0.0, new Rotation3d());
+    }
+    return bestTarget.getBestCameraToTarget();
+  }
+
+  public double get3dDist() {
+    return getTransformToTarget().getTranslation().getNorm();
+  }
+  ```
+
+## Pose3d (single target-- not really needed when multitag exists but is useful )
+```java
+public Pose3d getRobotPose3d() {
+    if (!pipeline.hasTargets()) {
+      return savedResult;
+    }
+    Optional<Pose3d> tagPose = aprilTagFieldLayout.getTagPose(bestTarget.getFiducialId());
+    if (tagPose.isEmpty()) {
+      return savedResult;
+    } else {
+      savedResult =
+          PhotonUtils.estimateFieldToRobotAprilTag(
+              getTransformToTarget(), tagPose.get(), camToRobot);
+    }
+    return savedResult;
+  }
+```
+
+## Multitag 
+```java
+public Optional<EstimatedRobotPose> getMultiTagPose3d(Pose2d previousRobotPose) {
+    photonPoseEstimator.setReferencePose(previousRobotPose);
+    return photonPoseEstimator.update();
+  }
+```
