@@ -1,21 +1,26 @@
 # Autonomous: How We Achieved a Successful 3 Note Auton
 
-## How it Works: 
+## PathPlanner
+- Easy way to see paths for auton
+- Can also be used during teleop so that the driver has an easier job
+- In its own app which is connected to the VScode
 
-PathPlanner is seperated into 2 seconds: autos and paths. The paths are like singular lego blocks that you use to create a cool build. On the other hand, autos are like the final build you make with these lego blocks. The paths help you seperate the over arching path you want to make into seperate sections which can be used later on when making new autos. On top of that, you can include Commands such as Intake or Shoot within PathPlanner which will run the method that is made within the actual code. An example of that is located in the integration section of this page. 
+## How it Works
 
-Here is an example of how to set up the drive system that utilizes the PathPlanner (assumes that the code already has these mathods)
+PathPlanner is seperated into 2 sections: autos and paths. The paths are like singular lego blocks that you use to create a cool build. On the other hand, autos are like the final build you make with these lego blocks. The paths help you seperate the overarching path you want to make into seperate sections which can be used later on when making new autos. On top of that, you can include Commands such as Intake or Shoot within PathPlanner which will run the method that is made within the actual code. An example of that is located in the integration section of this page. 
+
+Here is an example of how to set up the drive system that utilizes the PathPlanner (assumes that the code already has these methods)
 
 The methods needed: 
-* **getPose** - Returns the current robot pose as a Pose2d
-* **resetPose** - Resets the robot's odometry to the given pose
-* **getRobotRelativeSpeeds** or **getCurrentSpeeds** - Returns the current robot-relative ChassisSpeeds. This can be calculated using one of WPILib's drive kinematics classes
+* **getPose** - Returns the current robot pose as a Pose2d.
+* **resetPose** - Resets the robot's odometry to the given pose.
+* **getRobotRelativeSpeeds** or **getCurrentSpeeds** - Returns the current robot-relative ChassisSpeeds. This can be calculated using one of WPILib's drive kinematics classes.
 * **driveRobotRelative** or **drive** - Outputs commands to the robot's drive motors given robot-relative **ChassisSpeeds**. This can be converted to module states or wheel speeds using WPILib's drive kinematics classes.
 
 
 
 
-How to configure for **Swearth**: 
+## How to configure for Swerve
 
 ```java
 public class DriveSubsystem extends SubsystemBase {
@@ -59,3 +64,22 @@ public class DriveSubsystem extends SubsystemBase {
   }
 }
 ```
+
+## Integration with Robot Code
+### AutoBuilder
+
+AutoBuilder is configured inside the Drivetrain Subsystem
+This includes setting PID
+
+Autons are set inside RobotContainer within the 
+getAutonomousCommand()
+ method
+Choosing an auton can be done using AutoBuilder inside the method, refer to 2024-crescendo code to see how
+
+### Adding Name Commands
+This is also done within RobotContainer's constructor
+NamedCommands.registerCommand("Trigger Shot", new ArmToAngleCmd(angle, m_arm));
+
+
+
+PathPlanner automatically saves the autos and paths as json files within the Robot Code
