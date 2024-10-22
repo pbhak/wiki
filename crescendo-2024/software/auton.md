@@ -81,9 +81,9 @@ public class DriveSubsystem extends SubsystemBase {
 ### Adding Name Commands
 
 This is also done within RobotContainer's constructor:
+
 ```java
 NamedCommands.registerCommand("Trigger Shot", new ArmToAngleCmd(angle, m_arm));
 ```
-
 
 - PathPlanner automatically saves the autos and paths as json files within the robot code.
