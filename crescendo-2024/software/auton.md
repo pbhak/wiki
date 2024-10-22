@@ -19,9 +19,6 @@ The methods needed:
 * **getRobotRelativeSpeeds** or **getCurrentSpeeds** - Returns the current robot-relative ChassisSpeeds. This can be calculated using one of WPILib's drive kinematics classes.
 * **driveRobotRelative** or **drive** - Outputs commands to the robot's drive motors given robot-relative **ChassisSpeeds**. This can be converted to module states or wheel speeds using WPILib's drive kinematics classes.
 
-
-
-
 ## How to configure for Swerve
 
 ```java
