@@ -74,6 +74,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 - Autons are set inside RobotContainer within the `getAutonomousCommand()` method.
 - Choosing an auton can be done using AutoBuilder inside the method, refer to `2024-crescendo` code to see how.
+- To run the auton command that was loaded, use .schedule() in Robot.java
 
 ### Adding Name Commands
 
