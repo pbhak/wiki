@@ -1,3 +1,8 @@
-# Welcome to FTC software
+# FTC
 
-This section contains tips and tricks useful for all aspects of FTC software.
+This section contains general tips, advice, and guides for FTC teams.
+
+* [Mechanics and Engineering](mechanics-and-engineering.md)
+* [Driving and Competition](driving-and-competition.md)
+* [Working as a Team](working-as-a-team.md)
+* [Software](software.md)
